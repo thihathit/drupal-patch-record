@@ -1,0 +1,65 @@
+diff --git a/core/lib/Drupal/Core/EventSubscriber/ActiveLinkResponseFilter.php b/core/lib/Drupal/Core/EventSubscriber/ActiveLinkResponseFilter.php
+index ea8bff1..1258e28 100644
+--- a/core/lib/Drupal/Core/EventSubscriber/ActiveLinkResponseFilter.php
++++ b/core/lib/Drupal/Core/EventSubscriber/ActiveLinkResponseFilter.php
+@@ -192,14 +192,17 @@ public static function setLinkActiveClass($html_markup, $current_path, $is_front
+       // The query parameters of an active link are equal to the current
+       // parameters.
+       if ($add_active) {
+-        if ($query) {
+-          if (!$node->hasAttribute('data-drupal-link-query') || $node->getAttribute('data-drupal-link-query') !== Json::encode($query)) {
+-            $add_active = FALSE;
++        // Only remove the "active" class if the element is not of the class "language-link".
++        if (!in_array('language-link', explode(' ', $class))) {
++          if ($query) {
++            if (!$node->hasAttribute('data-drupal-link-query') || $node->getAttribute('data-drupal-link-query') !== Json::encode($query)) {
++              $add_active = FALSE;
++            }
+           }
+-        }
+-        else {
+-          if ($node->hasAttribute('data-drupal-link-query')) {
+-            $add_active = FALSE;
++          else {
++            if ($node->hasAttribute('data-drupal-link-query')) {
++              $add_active = FALSE;
++            }
+           }
+         }
+       }
+diff --git a/core/misc/active-link.js b/core/misc/active-link.js
+old mode 100644
+new mode 100755
+index 9cf55b4..6c65e60
+--- a/core/misc/active-link.js
++++ b/core/misc/active-link.js
+@@ -53,6 +53,13 @@
+       for (var i = 0; i < il; i++) {
+         activeLinks[i].classList.add('is-active');
+       }
++
++      // Mark language links in the current language as active, no matter the query string.
++      var languageLinks = context.querySelectorAll('.language-link[hreflang="' + path.currentLanguage + '"]');
++      for (var k = 0; k < languageLinks.length; k++) {
++        languageLinks[k].parentNode.classList.add('is-active');
++        languageLinks[k].classList.add('is-active');
++      }
+     },
+     detach: function (context, settings, trigger) {
+       if (trigger === 'unload') {
+diff --git a/core/modules/system/system.module b/core/modules/system/system.module
+old mode 100644
+new mode 100755
+index a1a6b71..7ad70b9
+--- a/core/modules/system/system.module
++++ b/core/modules/system/system.module
+@@ -661,7 +661,8 @@ function system_page_attachments(array &$page) {
+   // @see \Drupal\Core\Utility\LinkGenerator::generate()
+   // @see template_preprocess_links()
+   // @see \Drupal\Core\EventSubscriber\ActiveLinkResponseFilter
+-  if (\Drupal::currentUser()->isAuthenticated()) {
++  $route_name = \Drupal::request()->attributes->get('_route');
++  if (\Drupal::currentUser()->isAuthenticated() || in_array($route_name, ['system.404', 'system.403'])) {
+     $page['#attached']['library'][] = 'core/drupal.active-link';
+   }
+ }
