@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>readme</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="adding-patch-history-folder">Adding patch history folder</h1>
+<p>Folder name: <code>patches</code><br>
+Location: <code>root directory of Drupal</code></p>
+<h2 id="folder-structure">Folder structure</h2>
+<pre><code>patches/
+--------/README.md
+--------/README.html
+--------/records.yml
+--------/bugfix.patch
+--------/drupal.org/bugfix.patch
+</code></pre>
+<h2 id="records.yml-format">records.yml Format</h2>
+<pre><code># global restoration procedure [optional]
+RESTORATION_PROCEDURE:
+    description: how all the patches should be restored.
+
+# patched module/theme/file info
+module_name_or_relevant_name:
+	description: What this patch does.
+	patch_file_location: http://drupal.org/files/issues/bugfix.patch [live url of patch file if exists]
+	patch_file_location: /bugfix.patch [custom patch file location inside "patches/" folder]
+	local_patch_file_location: bugfix.patch
+	type: core/module ["core/theme" or "contrib/module" or "contrib/theme"]
+	restoration_procedure: How this patch should be restored. [does not required if global RESTORATION_PROCEDURE is set.]
+</code></pre>
+</div>
+<style type="text/css">
+  pre>code{white-space:inherit !important;overflow:auto;}
+</style>
+</body>
+</html>
