@@ -1,6 +1,5 @@
 RESTORATION_PROCEDURE:
-  description: download a copy of original module/core/theme code by it's version number
-    then replace the files.
+  description: download a copy of original module/core/theme code by it's version number then replace the files.
 
 language_switcher_menu:
   description: Fixes language switcher links's missing "is-active" when url contains query strings.
