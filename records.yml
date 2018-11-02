@@ -3,12 +3,16 @@ RESTORATION_PROCEDURE:
 
 language_switcher_menu:
   description: Fixes language switcher links's missing "is-active" when url contains query strings.
+  issue_path: https://www.drupal.org/node/2775651
   patch_file_location: https://www.drupal.org/files/issues/active-language-links-2775651-29_0.patch
   local_patch_file_location: /drupal.org/active-language-links-2775651-29_0.patch
   type: core/module
+  version: 8.x.x
 
 multilanguage_field_title:
   description: Fixes Multilanguage field titles especially image field types which is displaying raw html span tag along with title.
+  issue_path: https://www.drupal.org/node/2768711
   patch_file_location: https://www.drupal.org/files/issues/2768711-1.patch
   local_patch_file_location: /drupal.org/2768711-1.patch
   type: core/module
+  version: 8.x.x
