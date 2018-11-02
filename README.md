@@ -5,12 +5,16 @@ Location: `root directory of Drupal`
 
 ## Folder structure
 
-    patches/
-    --------/README.md
-    --------/README.html
-    --------/records.yml
-    --------/bugfix.patch
-    --------/drupal.org/bugfix.patch
+```bash
+patches/
+	README.md
+	README.html
+	records.yml
+	local/
+		bugfix.patch
+	drupal.org/
+		bugfix.patch
+```
 
 ## records.yml Format
 ```yaml
